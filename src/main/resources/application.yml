@@ -1,0 +1,2 @@
+batch:
+  csv-path: src/main/resources/random_users.csv

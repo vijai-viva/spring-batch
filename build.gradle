@@ -1,0 +1,71 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.github.ben-manes.versions' version '0.51.0' // Optional: to check for newer deps
+}
+
+group = 'com.viva'
+version = '0.0.1-SNAPSHOT'
+description = 'Spring Batch CSV to MySQL Project'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+ 	all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-batch'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.batch:spring-batch-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'org.springframework.boot:spring-boot-starter-logging'
+	implementation 'org.slf4j:slf4j-api:2.0.9'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework:spring-core'
+    implementation 'org.springframework:spring-context'
+	//For Unit Testing
+    testImplementation 'org.springframework.batch:spring-batch-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+springBoot {
+	buildInfo() // includes version info into your build
+}
+
+bootJar {
+	archiveFileName = "spring-batch-csv-mysql.jar"
+}
+
+task cleanBuild(dependsOn: ['clean', 'build']) {
+	group = "build"
+	description = "Cleans and builds the project"
+}

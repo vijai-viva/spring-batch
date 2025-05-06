@@ -1,0 +1,1 @@
+curl --location --request POST 'http://localhost:9191/jobs/importCust'
